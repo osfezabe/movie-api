@@ -23,13 +23,18 @@ public class PersonController {
 
     @GetMapping("{id}")
     public ResponseEntity<Person> get(@PathVariable Integer id) {
-        log.debug("Consultando los detalles de la película con id {}", id);
+        log.debug("Consultando los detalles de la persona/actor con id {}", id);
         var response = personService.get(id);
+        log.info("Detalles encontrados para la persona/actor {}", response);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("popular")
-    public ResponseEntity<PagedResponse<PersonWithMovie>> popular(@RequestParam(name = "page", required = false) Integer pageNumber) {
-        return ResponseEntity.ok(personService.popular(RestValidator.validPageNumberParam(pageNumber)));
+    public ResponseEntity<PagedResponse<PersonWithMovie>> popular(@RequestParam(name = "page", required = false) Integer page) {
+        int pageNumber = RestValidator.validPageNumberParam(page);
+        log.debug("Consultando listado de personas/actores populares. Página {}", pageNumber);
+        var response = personService.popular(pageNumber);
+        log.info("{} elementos encontrados en la página {} de personas/actores populares", response.total_results(), pageNumber);
+        return ResponseEntity.ok(personService.popular(pageNumber));
     }
 }

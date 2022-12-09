@@ -1,0 +1,9 @@
+server:
+  servlet:
+    context-path: /api/v1
+
+app:
+  moviedb:
+    apiURL: "https://api.themoviedb.org/3"
+    apiKey: "${MOVIEDB_API_KEY}"
+    pageSize: 20

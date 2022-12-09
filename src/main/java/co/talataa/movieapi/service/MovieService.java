@@ -11,11 +11,15 @@ public class MovieService {
     @Autowired
     private ApiService apiService;
 
+    public Movie get(Integer id) {
+        return apiService.get(MOVIE_BASE_PATH + "/" + id, Movie.class);
+    }
+
     public PagedResponse<Movie> popular(int pageNumber) {
         return apiService.getPage(MOVIE_BASE_PATH + "/popular", pageNumber);
     }
 
-    public Movie get(Integer id) {
-        return apiService.get(MOVIE_BASE_PATH + "/" + id, Movie.class);
+    public PagedResponse<Movie> top(int pageNumber) {
+        return apiService.getPage(MOVIE_BASE_PATH + "/top_rated", pageNumber);
     }
 }

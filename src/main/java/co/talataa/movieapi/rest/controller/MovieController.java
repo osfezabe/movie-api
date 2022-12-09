@@ -13,24 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
 @Log4j2
 @RequestMapping(path = "movies", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovieController {
-    private static final int DEFAULT_PAGE = 1;
     @Autowired
     private MovieService movieService;
 
     @GetMapping("{id}")
     public ResponseEntity<Movie> get(@PathVariable Integer id) {
-        return ResponseEntity.ok(movieService.get(id));
+        log.debug("Consultando los detalles de la película con id {}", id);
+        var response = movieService.get(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("popular")
-    public ResponseEntity<PagedResponse<Movie>> latest(@RequestParam(name = "page", required = false) Integer pageNumber) {
-        int page = Optional.ofNullable(pageNumber).map(number -> Math.max(number, DEFAULT_PAGE)).orElse(DEFAULT_PAGE);
-        return ResponseEntity.ok(movieService.popular(page));
+    public ResponseEntity<PagedResponse<Movie>> popular(@RequestParam(name = "page", required = false) Integer pageNumber) {
+        return ResponseEntity.ok(movieService.popular(RestValidator.validPageNumberParam(pageNumber)));
+    }
+
+    @GetMapping("top")
+    public ResponseEntity<PagedResponse<Movie>> top(@RequestParam(name = "page", required = false) Integer pageNumber) {
+        return ResponseEntity.ok(movieService.top(RestValidator.validPageNumberParam(pageNumber)));
     }
 }

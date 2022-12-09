@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "2ecd4220-32d8-4ac2-ac1f-5d2282307d79",
+		"name": "Movie DB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Popular",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/movies/popular?page=2",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"popular"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top Rated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/movies/top?page=1",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"top"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/movies/:id",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "550"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Persons",
+			"item": [
+				{
+					"name": "Popular",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/person/popular?page=1",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"person",
+								"popular"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/person/:id",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"person",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2948828"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genre",
+			"item": [
+				{
+					"name": "Complete genre list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/genre/list",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"genre",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movie genre list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/genre/movie/list",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"genre",
+								"movie",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TV genre list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/genre/tv/list",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"genre",
+								"tv",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiKey",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "apiBaseURL",
+			"value": "http://localhost:8080/api/v1",
+			"type": "default"
+		}
+	]
+}

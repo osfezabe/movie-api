@@ -24,16 +24,25 @@ public class MovieController {
     public ResponseEntity<Movie> get(@PathVariable Integer id) {
         log.debug("Consultando los detalles de la película con id {}", id);
         var response = movieService.get(id);
+        log.info("Detalles encontrados para la película {}", response);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("popular")
-    public ResponseEntity<PagedResponse<Movie>> popular(@RequestParam(name = "page", required = false) Integer pageNumber) {
-        return ResponseEntity.ok(movieService.popular(RestValidator.validPageNumberParam(pageNumber)));
+    public ResponseEntity<PagedResponse<Movie>> popular(@RequestParam(name = "page", required = false) Integer page) {
+        int pageNumber = RestValidator.validPageNumberParam(page);
+        log.debug("Consultando listado de películas populares. Página {}", pageNumber);
+        var response = movieService.popular(pageNumber);
+        log.info("{} elementos encontrados en la página {} de películas populares", response.total_results(), pageNumber);
+        return ResponseEntity.ok(movieService.popular(pageNumber));
     }
 
     @GetMapping("top")
-    public ResponseEntity<PagedResponse<Movie>> top(@RequestParam(name = "page", required = false) Integer pageNumber) {
-        return ResponseEntity.ok(movieService.top(RestValidator.validPageNumberParam(pageNumber)));
+    public ResponseEntity<PagedResponse<Movie>> top(@RequestParam(name = "page", required = false) Integer page) {
+        int pageNumber = RestValidator.validPageNumberParam(page);
+        log.debug("Consultando listado de películas mejor calificadas. Página {}", pageNumber);
+        var response = movieService.top(pageNumber);
+        log.info("{} elementos encontrados en la página {} de películas mejor calificadas", response.total_results(), pageNumber);
+        return ResponseEntity.ok(movieService.popular(pageNumber));
     }
 }

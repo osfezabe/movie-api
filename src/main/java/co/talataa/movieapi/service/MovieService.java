@@ -12,6 +12,10 @@ public class MovieService {
     private ApiService apiService;
 
     public PagedResponse<Movie> popular(int pageNumber) {
-        return apiService.getPage(pageNumber, MOVIE_BASE_PATH + "/popular");
+        return apiService.getPage(MOVIE_BASE_PATH + "/popular", pageNumber);
+    }
+
+    public Movie get(Integer id) {
+        return apiService.get(MOVIE_BASE_PATH + "/" + id, Movie.class);
     }
 }

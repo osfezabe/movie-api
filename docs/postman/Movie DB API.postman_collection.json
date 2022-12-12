@@ -6,28 +6,73 @@
 	},
 	"item": [
 		{
-			"name": "Movies",
+			"name": "Favorites",
 			"item": [
 				{
-					"name": "Popular",
+					"name": "Initialize favorites DEMO",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/movies/popular?page=2",
+							"raw": "{{apiBaseURL}}/api/v1/favorites/initialize",
 							"host": [
 								"{{apiBaseURL}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"movies",
-								"popular"
+								"favorites",
+								"initialize"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear favorites list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/favorites/clear",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"favorites",
+								"clear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/favorites",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"favorites"
 							],
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "8",
+									"disabled": true
 								}
 							]
 						}
@@ -35,25 +80,29 @@
 					"response": []
 				},
 				{
-					"name": "Top Rated",
+					"name": "Detailed list (data from MovieDB API)",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/movies/top?page=1",
+							"raw": "{{apiBaseURL}}/api/v1/favorites/detailed?page=1&size=5",
 							"host": [
 								"{{apiBaseURL}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"movies",
-								"top"
+								"favorites",
+								"detailed"
 							],
 							"query": [
 								{
 									"key": "page",
 									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
 								}
 							]
 						}
@@ -61,25 +110,106 @@
 					"response": []
 				},
 				{
-					"name": "Get by ID",
+					"name": "Get favorite movie",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/movies/:id",
+							"raw": "{{apiBaseURL}}/api/v1/favorites/:id",
 							"host": [
 								"{{apiBaseURL}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"movies",
+								"favorites",
 								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "550"
+									"value": "76600"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get detailed favorite movie (data from MovieDB)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/favorites/:id/detailed",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"favorites",
+								":id",
+								"detailed"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "76600"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add to favorites",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 76600,\n    \"title\": \"{{$randomAdjective}} {{$randomFullName}}\",\n    \"overview\": \"{{$randomLoremSentences}}\",\n    \"popularity\": 9.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/favorites",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove movie from favorites",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseURL}}/api/v1/favorites/:id",
+							"host": [
+								"{{apiBaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"favorites",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "76600"
 								}
 							]
 						}
@@ -89,126 +219,214 @@
 			]
 		},
 		{
-			"name": "Persons",
+			"name": "Data from Remote API",
 			"item": [
 				{
-					"name": "Popular",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/person/popular?page=1",
-							"host": [
-								"{{apiBaseURL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"person",
-								"popular"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
+					"name": "Movies",
+					"item": [
+						{
+							"name": "Popular",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/movies/popular?page=2",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"popular"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "by Id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/person/:id",
-							"host": [
-								"{{apiBaseURL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"person",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "2948828"
+							},
+							"response": []
+						},
+						{
+							"name": "Top Rated",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/movies/top?page=4",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"top"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "4"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Get by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/movies/:id",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "550"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Genre",
-			"item": [
-				{
-					"name": "Complete genre list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/genre/list",
-							"host": [
-								"{{apiBaseURL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"genre",
-								"list"
-							]
-						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Movie genre list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/genre/movie/list",
-							"host": [
-								"{{apiBaseURL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"genre",
-								"movie",
-								"list"
-							]
+					"name": "Genre",
+					"item": [
+						{
+							"name": "Complete genre list",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/genre/list",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"genre",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Movie genre list",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/genre/movie/list",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"genre",
+										"movie",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TV genre list",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/genre/tv/list",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"genre",
+										"tv",
+										"list"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "TV genre list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{apiBaseURL}}/api/v1/genre/tv/list",
-							"host": [
-								"{{apiBaseURL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"genre",
-								"tv",
-								"list"
-							]
+					"name": "Persons",
+					"item": [
+						{
+							"name": "Popular",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/person/popular?page=1",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"person",
+										"popular"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apiBaseURL}}/api/v1/person/:id",
+									"host": [
+										"{{apiBaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"person",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2948828"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		}

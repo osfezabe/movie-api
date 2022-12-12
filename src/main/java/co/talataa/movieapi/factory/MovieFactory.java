@@ -2,6 +2,7 @@ package co.talataa.movieapi.factory;
 
 import co.talataa.movieapi.domain.Movie;
 import co.talataa.movieapi.rest.dto.MovieDTO;
+import co.talataa.movieapi.rest.dto.moviedb.MovieDBRecord;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -34,5 +35,15 @@ public class MovieFactory {
         return Optional.ofNullable(movies)
                 .map(list -> list.stream().map(this::toDTO).toList())
                 .orElse(Collections.emptyList());
+    }
+
+    public Movie toEntity(MovieDBRecord movieDBRecord) {
+        return new Movie(
+                movieDBRecord.id(),
+                movieDBRecord.title(),
+                movieDBRecord.overview(),
+                movieDBRecord.popularity(),
+                movieDBRecord.markedAsFavorite()
+        );
     }
 }

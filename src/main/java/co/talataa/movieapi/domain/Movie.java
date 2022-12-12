@@ -1,5 +1,6 @@
 package co.talataa.movieapi.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ public class Movie {
     @Id
     private Integer id;
     private String title;
+    @Column(length = 1000)
     private String overview;
     private float popularity;
     private boolean markedAsFavorite;

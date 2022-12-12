@@ -94,9 +94,7 @@ public class FavoriteMovieController {
     @PostMapping("initialize")
     public ResponseEntity<String> initialize() {
         log.debug("Recibida nueva solicitud para configurar la lista inicial demostrativa de películas");
-        clearFavorites();
-
-        DemoMovies.loadDemoList().forEach(favoriteMovieService::addToFavorites);
+        favoriteMovieService.initializeFavorites();
         log.info("Lista inicial de películas recreada de forma correcta");
         return ResponseEntity.ok("");
     }

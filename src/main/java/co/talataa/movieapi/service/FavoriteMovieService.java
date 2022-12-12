@@ -3,6 +3,7 @@ package co.talataa.movieapi.service;
 import co.talataa.movieapi.domain.Movie;
 import co.talataa.movieapi.factory.MovieFactory;
 import co.talataa.movieapi.repository.MovieRepository;
+import co.talataa.movieapi.rest.dto.DemoMovies;
 import co.talataa.movieapi.rest.dto.MovieDTO;
 import co.talataa.movieapi.rest.dto.moviedb.MovieDBRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,11 @@ public class FavoriteMovieService {
     public void removeFromFavorites(Integer id) {
         Movie movie = movieRepository.findById(id).orElseThrow();
         movieRepository.delete(movie);
+    }
+
+    public void initializeFavorites() {
+        movieRepository.deleteAll();
+        List<MovieDBRecord> movies = DemoMovies.loadDemoList().parallelStream().map(movieService::get).toList();
+        movies.stream().map(movieFactory::toEntity).forEach(movieRepository::save);
     }
 }

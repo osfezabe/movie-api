@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PersonWithMovie extends Person {
-    private Movie known_for;
+    private MovieDBRecord known_for;
 }

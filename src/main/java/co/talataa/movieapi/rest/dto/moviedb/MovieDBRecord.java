@@ -3,7 +3,7 @@ package co.talataa.movieapi.rest.dto.moviedb;
 import java.time.LocalDate;
 import java.util.List;
 
-public record Movie(
+public record MovieDBRecord(
         Integer id,
         boolean adult,
         String backdrop_path,
@@ -28,6 +28,7 @@ public record Movie(
         String title,
         boolean video,
         float vote_average,
-        int vote_count
+        int vote_count,
+        boolean markedAsFavorite
 ) {
 }

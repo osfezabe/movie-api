@@ -1,6 +1,6 @@
 package co.talataa.movieapi.rest.controller;
 
-import co.talataa.movieapi.rest.dto.moviedb.Movie;
+import co.talataa.movieapi.rest.dto.moviedb.MovieDBRecord;
 import co.talataa.movieapi.rest.dto.moviedb.PagedResponse;
 import co.talataa.movieapi.service.MovieService;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +21,7 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping("{id}")
-    public ResponseEntity<Movie> get(@PathVariable Integer id) {
+    public ResponseEntity<MovieDBRecord> get(@PathVariable Integer id) {
         log.debug("Consultando los detalles de la película con id {}", id);
         var response = movieService.get(id);
         log.info("Detalles encontrados para la película {}", response);
@@ -29,7 +29,7 @@ public class MovieController {
     }
 
     @GetMapping("popular")
-    public ResponseEntity<PagedResponse<Movie>> popular(@RequestParam(name = "page", required = false) Integer page) {
+    public ResponseEntity<PagedResponse<MovieDBRecord>> popular(@RequestParam(name = "page", required = false) Integer page) {
         int pageNumber = RestValidator.validPageNumberParam(page);
         log.debug("Consultando listado de películas populares. Página {}", pageNumber);
         var response = movieService.popular(pageNumber);
@@ -38,7 +38,7 @@ public class MovieController {
     }
 
     @GetMapping("top")
-    public ResponseEntity<PagedResponse<Movie>> top(@RequestParam(name = "page", required = false) Integer page) {
+    public ResponseEntity<PagedResponse<MovieDBRecord>> top(@RequestParam(name = "page", required = false) Integer page) {
         int pageNumber = RestValidator.validPageNumberParam(page);
         log.debug("Consultando listado de películas mejor calificadas. Página {}", pageNumber);
         var response = movieService.top(pageNumber);

@@ -1,6 +1,6 @@
 package co.talataa.movieapi.service;
 
-import co.talataa.movieapi.rest.dto.moviedb.Movie;
+import co.talataa.movieapi.rest.dto.moviedb.MovieDBRecord;
 import co.talataa.movieapi.rest.dto.moviedb.PagedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,15 +11,15 @@ public class MovieService {
     @Autowired
     private ApiService apiService;
 
-    public Movie get(Integer id) {
-        return apiService.get(MOVIE_BASE_PATH + "/" + id, Movie.class);
+    public MovieDBRecord get(Integer id) {
+        return apiService.get(MOVIE_BASE_PATH + "/" + id, MovieDBRecord.class);
     }
 
-    public PagedResponse<Movie> popular(int pageNumber) {
+    public PagedResponse<MovieDBRecord> popular(int pageNumber) {
         return apiService.getPage(MOVIE_BASE_PATH + "/popular", pageNumber);
     }
 
-    public PagedResponse<Movie> top(int pageNumber) {
+    public PagedResponse<MovieDBRecord> top(int pageNumber) {
         return apiService.getPage(MOVIE_BASE_PATH + "/top_rated", pageNumber);
     }
 }

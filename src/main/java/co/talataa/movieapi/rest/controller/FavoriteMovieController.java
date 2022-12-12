@@ -1,5 +1,6 @@
 package co.talataa.movieapi.rest.controller;
 
+import co.talataa.movieapi.rest.dto.DemoMovies;
 import co.talataa.movieapi.rest.dto.MovieDTO;
 import co.talataa.movieapi.rest.dto.moviedb.MovieDBRecord;
 import co.talataa.movieapi.service.FavoriteMovieService;
@@ -71,5 +72,24 @@ public class FavoriteMovieController {
         favoriteMovieService.removeFromFavorites(id);
         log.info("Película con id {} removida de la lista de favoritas", id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("clear")
+    public ResponseEntity<String> clearFavorites() {
+        log.debug("Recibida nueva solicitud para limpiar las películas favoritas existentes");
+        List<MovieDTO> existingMovies = favoriteMovieService.list();
+        existingMovies.stream().map(MovieDTO::id).forEach(favoriteMovieService::removeFromFavorites);
+        log.info("Se eliminaron las películas favoritas actuales");
+        return ResponseEntity.ok("");
+    }
+
+    @PostMapping("initialize")
+    public ResponseEntity<String> initialize() {
+        log.debug("Recibida nueva solicitud para configurar la lista inicial demostrativa de películas");
+        clearFavorites();
+
+        DemoMovies.loadDemoList().forEach(favoriteMovieService::addToFavorites);
+        log.info("Lista inicial de películas recreada de forma correcta");
+        return ResponseEntity.ok("");
     }
 }

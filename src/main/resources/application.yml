@@ -2,6 +2,10 @@ server:
   servlet:
     context-path: /api/v1
 
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+
 app:
   moviedb:
     apiURL: "https://api.themoviedb.org/3"

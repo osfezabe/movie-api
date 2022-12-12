@@ -1,11 +1,17 @@
 package co.talataa.movieapi.rest.controller;
 
+import co.talataa.movieapi.domain.Movie;
+import co.talataa.movieapi.factory.MovieFactory;
 import co.talataa.movieapi.rest.dto.DemoMovies;
 import co.talataa.movieapi.rest.dto.MovieDTO;
 import co.talataa.movieapi.rest.dto.moviedb.MovieDBRecord;
 import co.talataa.movieapi.service.FavoriteMovieService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @Log4j2
@@ -26,19 +31,22 @@ public class FavoriteMovieController {
     @Autowired
     private FavoriteMovieService favoriteMovieService;
 
+    @Autowired
+    private MovieFactory movieFactory;
+
     @GetMapping
-    public ResponseEntity<List<MovieDTO>> list() {
-        log.debug("Consultando lista de películas favoritas registradas de forma local");
-        var response = favoriteMovieService.list();
-        log.info("Se encontraron {} películas marcadas como favoritas", response.size());
-        return ResponseEntity.ok(response);
+    public ResponseEntity<Page<MovieDTO>> list(@PageableDefault(size = 20) Pageable pageable) {
+        log.debug("Consultando lista de películas favoritas registradas de forma local. Detalles de paginación: {}", pageable);
+        var response = favoriteMovieService.list(pageable);
+        log.info("Se encontraron {} películas marcadas como favoritas", response.getNumberOfElements());
+        return ResponseEntity.ok(new PageImpl<>(movieFactory.toDTOs(response.toList()), pageable, response.getTotalElements()));
     }
 
     @GetMapping("detailed")
-    public ResponseEntity<List<MovieDBRecord>> detailed() {
+    public ResponseEntity<Page<MovieDBRecord>> detailed(@PageableDefault(size = 20) Pageable pageable) {
         log.debug("Consultando lista detallada de las películas que están marcadas como favoritas");
-        var response = favoriteMovieService.detailedList();
-        log.info("Se encontraron {} películas marcadas como favoritas", response.size());
+        var response = favoriteMovieService.detailedList(pageable);
+        log.info("Se encontraron {} películas marcadas como favoritas", response.getNumberOfElements());
         return ResponseEntity.ok(response);
     }
 
@@ -77,8 +85,8 @@ public class FavoriteMovieController {
     @PostMapping("clear")
     public ResponseEntity<String> clearFavorites() {
         log.debug("Recibida nueva solicitud para limpiar las películas favoritas existentes");
-        List<MovieDTO> existingMovies = favoriteMovieService.list();
-        existingMovies.stream().map(MovieDTO::id).forEach(favoriteMovieService::removeFromFavorites);
+        Page<Movie> existingMovies = favoriteMovieService.list(Pageable.unpaged());
+        existingMovies.stream().map(Movie::getId).forEach(favoriteMovieService::removeFromFavorites);
         log.info("Se eliminaron las películas favoritas actuales");
         return ResponseEntity.ok("");
     }

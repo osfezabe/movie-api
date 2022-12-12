@@ -4,6 +4,10 @@ import co.talataa.movieapi.domain.Movie;
 import co.talataa.movieapi.rest.dto.MovieDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 @Component
 public class MovieFactory {
     public MovieDTO toDTO(Movie movie) {
@@ -24,5 +28,11 @@ public class MovieFactory {
                 dto.popularity(),
                 dto.markedAsFavorite()
         );
+    }
+
+    public List<MovieDTO> toDTOs(List<Movie> movies) {
+        return Optional.ofNullable(movies)
+                .map(list -> list.stream().map(this::toDTO).toList())
+                .orElse(Collections.emptyList());
     }
 }

@@ -163,9 +163,9 @@
 					"response": []
 				},
 				{
-					"name": "Add to favorites",
+					"name": "Set movie as favorite",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>co.talataa</groupId>
 	<artifactId>movieapi</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Movie API</name>
 	<description>Demo project to connect with The Movie Database</description>
 	<properties>

@@ -1,0 +1,5 @@
+app:
+  moviedb:
+    apiURL: "https://api.themoviedb.org/3"
+    apiKey: "test"
+    pageSize: 20
